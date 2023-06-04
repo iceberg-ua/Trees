@@ -21,6 +21,40 @@ public class NaryNode<T>
         return result;
     }
 
+    private List<NaryNode<T>> TraversePreorder(NaryNode<T>? node)
+    {
+        var result = new List<NaryNode<T>>();
+
+        if (node == null)
+            return result;
+
+        result.Add(node);
+
+        foreach (var child in node.Children)
+        {
+            result.AddRange(TraversePreorder(child));
+        }
+
+        return result;
+    }
+
+    private List<NaryNode<T>> TraversePostorder(NaryNode<T>? node)
+    {
+        var result = new List<NaryNode<T>>();
+
+        if (node == null)
+            return result;
+
+        foreach (var child in node.Children)
+        {
+            result.AddRange(TraversePostorder(child));
+        }
+
+        result.Add(node);
+
+        return result;
+    }
+
     #region Public interface
 
     public T Value { get; }
@@ -42,6 +76,31 @@ public class NaryNode<T>
 
             if (result is not null)
                 break;
+        }
+
+        return result;
+    }
+
+    public List<NaryNode<T>> TraversePreorder() => TraversePreorder(this);
+
+    public List<NaryNode<T>> TraversePostorder() => TraversePostorder(this);
+
+    public List<NaryNode<T>> BreadthFirst()
+    {
+        var result = new List<NaryNode<T>>();
+        var queue = new Queue<NaryNode<T>>();
+
+        queue.Enqueue(this);
+
+        while (queue.Count > 0)
+        {
+            var item = queue.Dequeue();
+            result.Add(item);
+
+            foreach ( var child in item.Children )
+            {
+                queue.Enqueue(child);
+            }
         }
 
         return result;

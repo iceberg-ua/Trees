@@ -91,6 +91,11 @@ FindValueInNaryTree(nRoot, "E");
 FindValueInNaryTree(nRoot, "F");
 FindValueInNaryTree(nRoot, "Q");
 FindValueInNaryTree(C, "F");
+
+PrintNarvyTreeTraverse(nRoot.TraversePreorder, "Preorder");
+PrintNarvyTreeTraverse(nRoot.TraversePostorder, "Postorder");
+PrintNarvyTreeTraverse(nRoot.BreadthFirst, "Breadth First");
+
 //Console.WriteLine(A);
 //Console.WriteLine(B);
 //Console.WriteLine(C);
@@ -106,4 +111,16 @@ static void FindValueInNaryTree(NaryNode<string> node, string value)
     var searchResult = node.FindNode(value);
 
     Console.WriteLine(searchResult is null ? $"Value {value} not found" : $"Found {searchResult.Value}");
+}
+
+static void PrintNarvyTreeTraverse(Func<List<NaryNode<string>>> traverse, string traverseType)
+{
+    var result = $"{traverseType + ":",-15}";
+
+    foreach (var item in traverse())
+    {
+        result += $"{item.Value} ";
+    }
+
+    Console.WriteLine(result);
 }

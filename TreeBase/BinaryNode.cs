@@ -90,32 +90,11 @@ public class BinaryNode<T>
         return result;
     }
 
-    public List<BinaryNode<T>> TraversePreorder()
-    {
-        var result = new List<BinaryNode<T>>();
+    public List<BinaryNode<T>> TraversePreorder() => TraversePreorder(this);
 
-        result.AddRange(TraversePreorder(this));
+    public List<BinaryNode<T>> TraverseInorder() => TraverseInorder(this);
 
-        return result;
-    }
-
-    public List<BinaryNode<T>> TraverseInorder()
-    {
-        var result = new List<BinaryNode<T>>();
-
-        result.AddRange(TraverseInorder(this));
-
-        return result;
-    }
-
-    public List<BinaryNode<T>> TraversePostorder()
-    {
-        var result = new List<BinaryNode<T>>();
-
-        result.AddRange(TraversePostorder(this));
-
-        return result;
-    }
+    public List<BinaryNode<T>> TraversePostorder() => TraversePostorder(this);
 
     public List<BinaryNode<T>> BreadthFirst()
     {
