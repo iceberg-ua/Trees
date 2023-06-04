@@ -10,14 +10,7 @@ public class BinaryNode<T>
 
     public BinaryNode<T>? RightBranch { get; private set; } = null;
 
-    public void AddLeft(BinaryNode<T> node) => LeftBranch = node;
-
-    public void AddRight(BinaryNode<T> node) => RightBranch = node;
-
-    public override string ToString()
-    {
-        return ToString("");
-    }
+    private static string BranchToString(BinaryNode<T>? node, string indent) => Environment.NewLine + (node == null ? indent + "None" : node.ToString(indent));
 
     private string ToString(string indent)
     {
@@ -26,10 +19,38 @@ public class BinaryNode<T>
         if (LeftBranch != null || RightBranch != null)
         {
             indent += "   ";
-            result += Environment.NewLine + (LeftBranch == null ? indent + "None" : LeftBranch.ToString(indent));
-            result += Environment.NewLine + (RightBranch == null ? indent + "None" : RightBranch.ToString(indent));
+            result += BinaryNode<T>.BranchToString(LeftBranch, indent) + BinaryNode<T>.BranchToString(RightBranch, indent);
         }
 
         return result;
     }
+
+    #region Public interface
+
+    public void AddLeft(BinaryNode<T> node) => LeftBranch = node;
+
+    public void AddRight(BinaryNode<T> node) => RightBranch = node;
+
+    public BinaryNode<T>? FindNode(T value)
+    {
+        if (Value!.Equals(value))
+            return this;
+
+        BinaryNode<T>? result = null;
+
+        if (LeftBranch is not null)
+            result = LeftBranch.FindNode(value);
+
+        if (result == null && RightBranch is not null)
+            result = RightBranch.FindNode(value);
+
+        return result;
+    }
+
+    public override string ToString()
+    {
+        return ToString("");
+    }
+
+    #endregion
 }

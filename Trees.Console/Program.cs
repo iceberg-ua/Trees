@@ -17,12 +17,25 @@ b.AddRight(e);
 e.AddLeft(f);
 
 Console.WriteLine(root);
+
+FindValue(root, "Root");
+FindValue(root, "E");
+FindValue(root, "F");
+FindValue(root, "Q");
+FindValue(b, "F");
 //Console.WriteLine(a);
 //Console.WriteLine(b);
 //Console.WriteLine(c);
 //Console.WriteLine(d);
 //Console.WriteLine(e);
 //Console.WriteLine(f);
+
+void FindValue(BinaryNode<string> node, string value)
+{
+    var searchResult = node.FindNode(value);
+
+    Console.WriteLine(searchResult is null ? $"Value {value} not found" : $"Found {searchResult.Value}");
+}
 
 Console.WriteLine("----------------------------");
 
