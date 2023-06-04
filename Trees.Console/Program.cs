@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using TreeBase;
 
+#region Binary Node
+
 var root = new BinaryNode<string>("Root");
 var a = new BinaryNode<string>("A");
 var b = new BinaryNode<string>("B");
@@ -24,6 +26,11 @@ FindValueInBinaryTree(root, "F");
 FindValueInBinaryTree(root, "Q");
 FindValueInBinaryTree(b, "F");
 
+PrintTreeTraverse(root.TraversePreorder, "Preorder");
+PrintTreeTraverse(root.TraverseInorder, "Inorder");
+PrintTreeTraverse(root.TraversePostorder, "Postorder");
+PrintTreeTraverse(root.BreadthFirst, "Breadth First");
+
 //Console.WriteLine(a);
 //Console.WriteLine(b);
 //Console.WriteLine(c);
@@ -38,12 +45,19 @@ static void FindValueInBinaryTree(BinaryNode<string> node, string value)
     Console.WriteLine(searchResult is null ? $"Value {value} not found" : $"Found {searchResult.Value}");
 }
 
-static void FindValueInNaryTree(NaryNode<string> node, string value)
+static void PrintTreeTraverse(Func<List<BinaryNode<string>>> traverse, string traverseType)
 {
-    var searchResult = node.FindNode(value);
+    var result = $"{traverseType + ":",-15}";
 
-    Console.WriteLine(searchResult is null ? $"Value {value} not found" : $"Found {searchResult.Value}");
+    foreach (var item in traverse())
+    {
+        result += $"{item.Value} ";
+    }
+
+    Console.WriteLine(result);
 }
+
+#endregion
 
 Console.WriteLine("----------------------------");
 
@@ -86,3 +100,10 @@ FindValueInNaryTree(C, "F");
 //Console.WriteLine(G);
 //Console.WriteLine(H);
 //Console.WriteLine(I);
+
+static void FindValueInNaryTree(NaryNode<string> node, string value)
+{
+    var searchResult = node.FindNode(value);
+
+    Console.WriteLine(searchResult is null ? $"Value {value} not found" : $"Found {searchResult.Value}");
+}

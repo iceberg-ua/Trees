@@ -12,6 +12,49 @@ public class BinaryNode<T>
 
     private static string BranchToString(BinaryNode<T>? node, string indent) => Environment.NewLine + (node == null ? indent + "None" : node.ToString(indent));
 
+    private List<BinaryNode<T>> TraversePreorder(BinaryNode<T>? node)
+    {
+        var result = new List<BinaryNode<T>>();
+
+        if (node == null)
+            return result;
+
+        result.Add(node);
+
+        result.AddRange(TraversePreorder(node.LeftBranch));
+        result.AddRange(TraversePreorder(node.RightBranch));
+
+        return result;
+    }
+
+    private List<BinaryNode<T>> TraverseInorder(BinaryNode<T>? node)
+    {
+        var result = new List<BinaryNode<T>>();
+
+        if (node == null)
+            return result;
+
+        result.AddRange(TraverseInorder(node.LeftBranch));
+        result.Add(node);
+        result.AddRange(TraverseInorder(node.RightBranch));
+
+        return result;
+    }
+
+    private List<BinaryNode<T>> TraversePostorder(BinaryNode<T>? node)
+    {
+        var result = new List<BinaryNode<T>>();
+
+        if (node == null)
+            return result;
+
+        result.AddRange(TraversePostorder(node.LeftBranch));
+        result.AddRange(TraversePostorder(node.RightBranch));
+        result.Add(node);
+
+        return result;
+    }
+
     private string ToString(string indent)
     {
         var result = $"{indent}{Value}:";
@@ -43,6 +86,55 @@ public class BinaryNode<T>
 
         if (result == null && RightBranch is not null)
             result = RightBranch.FindNode(value);
+
+        return result;
+    }
+
+    public List<BinaryNode<T>> TraversePreorder()
+    {
+        var result = new List<BinaryNode<T>>();
+
+        result.AddRange(TraversePreorder(this));
+
+        return result;
+    }
+
+    public List<BinaryNode<T>> TraverseInorder()
+    {
+        var result = new List<BinaryNode<T>>();
+
+        result.AddRange(TraverseInorder(this));
+
+        return result;
+    }
+
+    public List<BinaryNode<T>> TraversePostorder()
+    {
+        var result = new List<BinaryNode<T>>();
+
+        result.AddRange(TraversePostorder(this));
+
+        return result;
+    }
+
+    public List<BinaryNode<T>> BreadthFirst()
+    {
+        var result = new List<BinaryNode<T>>();
+        var queue = new Queue<BinaryNode<T>>();
+
+        queue.Enqueue(this);
+        
+        while (queue.Count > 0)
+        {
+            var item = queue.Dequeue();
+            result.Add(item);
+
+            if (item.LeftBranch != null)
+                queue.Enqueue(item.LeftBranch);
+
+            if(item.RightBranch != null)
+                queue.Enqueue(item.RightBranch);
+        }
 
         return result;
     }
