@@ -7,17 +7,6 @@ public class NaryNode<T>
         Value = value;
     }
 
-    public T Value { get; }
-
-    public List<NaryNode<T>> Children { get; } = new();
-
-    public void AddChild(NaryNode<T> child) => Children.Add(child);
-
-    public override string ToString()
-    {
-        return ToString("");
-    }
-
     private string ToString(string indent)
     {
         var result = $"{indent}{Value}: ";
@@ -31,4 +20,37 @@ public class NaryNode<T>
 
         return result;
     }
+
+    #region Public interface
+
+    public T Value { get; }
+
+    public List<NaryNode<T>> Children { get; } = new();
+
+    public void AddChild(NaryNode<T> child) => Children.Add(child);
+
+    public NaryNode<T>? FindNode(T value)
+    {
+        if (Value!.Equals(value))
+            return this;
+
+        NaryNode<T>? result = null;
+
+        foreach (var child in Children)
+        {
+            result = child.FindNode(value);
+
+            if (result is not null)
+                break;
+        }
+
+        return result;
+    }
+
+    public override string ToString()
+    {
+        return ToString("");
+    }
+
+    #endregion
 }

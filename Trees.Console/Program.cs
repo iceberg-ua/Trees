@@ -18,11 +18,12 @@ e.AddLeft(f);
 
 Console.WriteLine(root);
 
-FindValue(root, "Root");
-FindValue(root, "E");
-FindValue(root, "F");
-FindValue(root, "Q");
-FindValue(b, "F");
+FindValueInBinaryTree(root, "Root");
+FindValueInBinaryTree(root, "E");
+FindValueInBinaryTree(root, "F");
+FindValueInBinaryTree(root, "Q");
+FindValueInBinaryTree(b, "F");
+
 //Console.WriteLine(a);
 //Console.WriteLine(b);
 //Console.WriteLine(c);
@@ -30,7 +31,14 @@ FindValue(b, "F");
 //Console.WriteLine(e);
 //Console.WriteLine(f);
 
-void FindValue(BinaryNode<string> node, string value)
+static void FindValueInBinaryTree(BinaryNode<string> node, string value)
+{
+    var searchResult = node.FindNode(value);
+
+    Console.WriteLine(searchResult is null ? $"Value {value} not found" : $"Found {searchResult.Value}");
+}
+
+static void FindValueInNaryTree(NaryNode<string> node, string value)
 {
     var searchResult = node.FindNode(value);
 
@@ -63,6 +71,12 @@ F.AddChild(H);
 F.AddChild(I);
 
 Console.WriteLine(nRoot);
+
+FindValueInNaryTree(nRoot, "Root");
+FindValueInNaryTree(nRoot, "E");
+FindValueInNaryTree(nRoot, "F");
+FindValueInNaryTree(nRoot, "Q");
+FindValueInNaryTree(C, "F");
 //Console.WriteLine(A);
 //Console.WriteLine(B);
 //Console.WriteLine(C);
